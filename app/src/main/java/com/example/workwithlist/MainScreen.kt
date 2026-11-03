@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +21,9 @@ import androidx.compose.ui.res.stringResource
 
 @Composable
 fun ListScreen(
-    itemCount: Int,
-    onAddClick: () -> Unit
+    items: List<Int>,
+    onAddClick: () -> Unit,
+    onItemClick: (Int) -> Unit
 ) {
     val columnsCount = integerResource(id = R.integer.columns_count)
     val itemSpacing = dimensionResource(id = R.dimen.item_spacing)
@@ -38,8 +40,11 @@ fun ListScreen(
             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
         ) {
-            items(count = itemCount) { index ->
-                ListItem(index)
+            items(items) { number ->
+                ListItem(
+                    number = number,
+                    onClick = { onItemClick(number) }
+                )
             }
         }
         Spacer(modifier = Modifier.height(itemSpacing))

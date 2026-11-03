@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -11,9 +13,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val myItems by viewModel.myItems.collectAsState()
             ListScreen(
-                itemCount = viewModel.itemCount,
-                onAddClick = { viewModel.addItem() }
+                items = myItems.items,
+                onAddClick = { viewModel.addItem() },
+                onItemClick = { item -> viewModel.removeItem(item) }
             )
         }
     }

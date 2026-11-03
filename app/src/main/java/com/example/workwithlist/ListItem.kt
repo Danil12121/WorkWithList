@@ -1,6 +1,7 @@
 package com.example.workwithlist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +14,8 @@ import androidx.compose.ui.res.colorResource
 
 @Composable
 fun ListItem(
-    index: Int
+    number: Int,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -21,13 +23,14 @@ fun ListItem(
             .aspectRatio(1f)
             .background(
                 colorResource(
-                    if (index % 2 == 0) R.color.even  else R.color.odd
+                    if (number % 2 == 0) R.color.even else R.color.odd
                 )
-            ),
+            )
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = index.toString(),
+            text = number.toString(),
             color = colorResource(id = R.color.white),
             style = MaterialTheme.typography.titleLarge
         )
